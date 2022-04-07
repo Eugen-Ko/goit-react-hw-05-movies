@@ -1,21 +1,9 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchTrending } from 'services/services';
 import { Title } from './PageStyles.styles';
+import { useFetchTrending } from 'hooks/Hooks';
 
 export const HomePage = () => {
-  const [trandingMovies, setTrandingMovies] = useState(null);
-
-  const normalize = data => {
-    return data.results.map(movie => {
-      if (!movie.title) movie.title = movie.name;
-      return movie;
-    });
-  };
-
-  useEffect(() => {
-    fetchTrending().then(data => setTrandingMovies(normalize(data)));
-  }, []);
+  const trandingMovies = useFetchTrending();
 
   return (
     <>
