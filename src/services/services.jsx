@@ -16,12 +16,18 @@ export async function fetchMovieDetails(moviesId) {
   return response === 404 ? response : response.data;
 }
 
-// export async function fetchBooks() {
-//   const response = await axios.get('/books');
-//   return response.data;
-// }
+export async function fetchMovieCast(moviesId) {
+  const response = await axios.get(
+    `movie/${moviesId}/credits?api_key=${APIKEY}&language=en-US`
+  );
+  return response.data;
+}
 
-// export async function fetchBookById(bookId) {
-//   const response = await axios.get(`/books/${bookId}?_expand=author`);
-//   return response.data;
-// }
+export async function fetchMovieReviews(moviesId) {
+  const response = await axios
+    .get(`/movie/${moviesId}/reviews?api_key=${APIKEY}&language=en-US&page=1`)
+    .catch(function (error) {
+      return error.response.status;
+    });
+  return response === 404 ? response : response.data;
+}

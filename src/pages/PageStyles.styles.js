@@ -41,3 +41,24 @@ export const BoxCastReviews = styled.div`
   border-top: 2px solid #000000;
   border-bottom: 2px solid #000000;
 `;
+
+export const ActorBox = styled.li`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+`;
+
+export const ImageActor = styled.img`
+  margin: 0;
+  padding: 15px 15px 15px 0;
+  height: 180px;
+  display: block;
+`;
+
+export const ActorInfo = styled.div`
+  margin: 0;
+  padding: 15px 15px 15px 0;
+  height: 150px;
+  display: block;
+`;
