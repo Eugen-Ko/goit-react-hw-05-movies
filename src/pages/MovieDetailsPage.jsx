@@ -1,4 +1,5 @@
 import { useFetchMovieDetails } from 'hooks/Hooks';
+import { Outlet, NavLink } from 'react-router-dom';
 import {
   DetailesBox,
   ImageBox,
@@ -34,12 +35,17 @@ export const MovieDetailsPage = () => {
           <BoxCastReviews>
             <p>Additional information</p>
             <ul>
-              <li>Cast</li>
-              <li>Reviews</li>
+              <li>
+                <NavLink to={`cast`}>Cast</NavLink>
+              </li>
+              <li>
+                <NavLink to={`reviews`}>Review</NavLink>
+              </li>
             </ul>
           </BoxCastReviews>
         </>
       )}
+      <Outlet />
     </>
   );
 };
