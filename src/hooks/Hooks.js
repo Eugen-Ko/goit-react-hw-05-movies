@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import * as moviesApi from 'services/services';
 import undefined from 'pages/image/undefined.jpg';
 
@@ -88,4 +88,16 @@ export const useFetchMovieReviews = () => {
     });
   }, [moviesId]);
   return reviewsDetail;
+};
+
+// --- for ParentPage --------------
+export const useParentPage = () => {
+  const [parentPage, setParentPage] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    return setParentPage(location.state);
+  }, [location.state]);
+
+  return parentPage;
 };

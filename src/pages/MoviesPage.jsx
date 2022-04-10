@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   BoxSearch,
   ButtonSearch,
@@ -9,27 +9,40 @@ import {
 import { fetchSearchMovies } from 'services/services';
 
 export const MoviesPage = () => {
-  const [searchQuery, setSearchQuery] = useState(null);
+  const location = useLocation();
+
+  let query = new URLSearchParams(location.search).get('query');
+
+  const [searchQuery, setSearchQuery] = useState(query ? query : null);
   const [searchList, setSearchList] = useState(null);
   const [pending, setPending] = useState(true);
-  localStorage.setItem('parent', '/movies');
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (!searchQuery) {
+      location.search = null;
+      setSearchList(null);
       return;
     }
+
     setPending(false);
+
     fetchSearchMovies(searchQuery).then(data => {
       setPending(true);
       return data.total_results
         ? setSearchList(data.results)
         : setSearchList(0);
     });
-  }, [searchQuery]);
+  }, [location, searchQuery]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    setSearchQuery(e.target[0].value);
+    query = e.target[0].value.toLowerCase().trim();
+    setSearchQuery(query);
+    navigate({
+      ...location,
+      search: `query=${query}`,
+    });
   };
 
   return (
@@ -40,7 +53,7 @@ export const MoviesPage = () => {
             type="text"
             autoComplete="off"
             autoFocus
-            placeholder="Search movies..."
+            placeholder={`Search movies...`}
           />
           <ButtonSearch type="submit">Search</ButtonSearch>
         </FormSearch>
@@ -51,7 +64,9 @@ export const MoviesPage = () => {
         <ul>
           {searchList.map(movie => (
             <li key={movie.id}>
-              <Link to={`${movie.id}`}>{movie.title}</Link>
+              <Link to={`${movie.id}`} state={`/movies/${location.search}`}>
+                {movie.title}
+              </Link>
             </li>
           ))}
         </ul>

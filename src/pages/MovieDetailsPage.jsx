@@ -1,4 +1,4 @@
-import { useFetchMovieDetails } from 'hooks/Hooks';
+import { useFetchMovieDetails, useParentPage } from 'hooks/Hooks';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   DetailesBox,
@@ -11,14 +11,14 @@ import {
 
 export const MovieDetailsPage = () => {
   const movieDetails = useFetchMovieDetails();
-  console.log(localStorage.getItem('parent'));
+  const parentPage = useParentPage();
   let navigate = useNavigate();
 
   return (
     <>
       <ButtonGoBack
         type="button"
-        onClick={() => navigate(localStorage.getItem('parent'))}
+        onClick={() => navigate(parentPage)}
       >{`<- Go Back`}</ButtonGoBack>
       {!movieDetails && <h1>Loading...</h1>}
       {movieDetails === 404 && <h1>Інформація відсутня. Бекенд лінивий!!!</h1>}
@@ -43,10 +43,14 @@ export const MovieDetailsPage = () => {
             <p>Additional information</p>
             <ul>
               <li>
-                <NavLink to={`cast`}>Cast</NavLink>
+                <NavLink to={`cast`} state={parentPage}>
+                  Cast
+                </NavLink>
               </li>
               <li>
-                <NavLink to={`reviews`}>Review</NavLink>
+                <NavLink to={`reviews`} state={parentPage}>
+                  Review
+                </NavLink>
               </li>
             </ul>
           </BoxCastReviews>
