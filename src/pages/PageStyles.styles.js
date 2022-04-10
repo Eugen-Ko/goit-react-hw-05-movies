@@ -62,3 +62,51 @@ export const ActorInfo = styled.div`
   height: 150px;
   display: block;
 `;
+
+export const BoxSearch = styled.div`
+  display: flex;
+  padding-left: 15px;
+`;
+
+export const FormSearch = styled.form`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+`;
+
+export const InputSearch = styled.input`
+  display: inline-block;
+  width: 100%;
+  font: inherit;
+  font-size: 17px;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  &::placeholder {
+    font: inherit;
+    font-size: 18px;
+  }
+`;
+
+export const ButtonSearch = styled.button`
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+  border: 0;
+  color: #c1c1c1;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border-left: 1px solid #000000;
+  &:hover {
+    color: #2196f3;
+  }
+`;

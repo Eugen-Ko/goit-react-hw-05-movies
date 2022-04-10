@@ -1,31 +1,65 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { fetchTrending } from 'services/services';
-import { Title } from './PageStyles.styles';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
+import {
+  BoxSearch,
+  ButtonSearch,
+  FormSearch,
+  InputSearch,
+} from './PageStyles.styles';
+import { fetchSearchMovies } from 'services/services';
 
 export const MoviesPage = () => {
-  const [trandingMovies, setTrandingMovies] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(null);
+  const [searchList, setSearchList] = useState(null);
+  const [pending, setPending] = useState(true);
 
-  const normalize = data => {
-    return data.results.map(movie => {
-      if (!movie.title) movie.title = movie.name;
-      return movie;
-    });
-  };
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
-    fetchTrending().then(data => setTrandingMovies(normalize(data)));
-  }, []);
+    if (!searchQuery) {
+      return;
+    }
+    setPending(false);
+    fetchSearchMovies(searchQuery).then(data => {
+      console.log(data);
+      setPending(true);
+      return data.total_results
+        ? setSearchList(data.results)
+        : setSearchList(0);
+    });
+  }, [searchQuery]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setSearchQuery(e.target[0].value);
+
+    console.log('useParams: ', params);
+    console.log('useLocation: ', location);
+    console.log('useNavigation: ', navigate);
+  };
 
   return (
     <>
-      <Title>Trending today</Title>
-
-      {trandingMovies && (
+      <BoxSearch>
+        <FormSearch onSubmit={e => handleSubmit(e)}>
+          <InputSearch
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search movies..."
+          />
+          <ButtonSearch type="submit">Search</ButtonSearch>
+        </FormSearch>
+      </BoxSearch>
+      {!pending && <h1>Loading...</h1>}
+      {searchList === 0 && <h3>Nothing found</h3>}
+      {searchList !== 0 && searchList && (
         <ul>
-          {trandingMovies.map(movie => (
+          {searchList.map(movie => (
             <li key={movie.id}>
-              <NavLink to={`${movie.id}`}>{movie.title}</NavLink>
+              <Link to={`${movie.id}`}>{movie.title}</Link>
             </li>
           ))}
         </ul>
