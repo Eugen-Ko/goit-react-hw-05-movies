@@ -1,12 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from 'components/Layout/Layout';
 import { createAsyncView } from 'services/HelpFunctions';
-// import { HomePage } from 'pages/HomePage';
-// import { MoviesPage } from 'pages/MoviesPage';
-// import { MovieDetailsPage } from 'pages/MovieDetailsPage';
-// import { MovieDetailsCast } from 'pages/MovieDetailsCast';
-// import { MovieDetailsReviews } from 'pages/MovieDetailsReviews';
-// import { NotFoundPage } from 'pages/NotFoundPage';
 
 const HomePage = createAsyncView('HomePage');
 const MoviesPage = createAsyncView('MoviesPage');
