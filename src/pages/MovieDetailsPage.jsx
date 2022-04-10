@@ -11,13 +11,15 @@ import {
 
 export const MovieDetailsPage = () => {
   const movieDetails = useFetchMovieDetails();
-  const navigate = useNavigate();
+  console.log(localStorage.getItem('parent'));
+  let navigate = useNavigate();
 
   return (
     <>
-      <ButtonGoBack type="button" onClick={() => navigate(-1)}>
-        {`<- Go Back`}
-      </ButtonGoBack>
+      <ButtonGoBack
+        type="button"
+        onClick={() => navigate(localStorage.getItem('parent'))}
+      >{`<- Go Back`}</ButtonGoBack>
       {!movieDetails && <h1>Loading...</h1>}
       {movieDetails === 404 && <h1>Інформація відсутня. Бекенд лінивий!!!</h1>}
       {movieDetails !== 404 && movieDetails && (

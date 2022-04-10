@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   BoxSearch,
   ButtonSearch,
@@ -12,9 +12,7 @@ export const MoviesPage = () => {
   const [searchQuery, setSearchQuery] = useState(null);
   const [searchList, setSearchList] = useState(null);
   const [pending, setPending] = useState(true);
-
-  const location = useLocation();
-  const navigate = useNavigate();
+  localStorage.setItem('parent', '/movies');
 
   useEffect(() => {
     if (!searchQuery) {

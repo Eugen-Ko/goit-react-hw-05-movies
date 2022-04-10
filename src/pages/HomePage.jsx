@@ -4,6 +4,7 @@ import { useFetchTrending } from 'hooks/Hooks';
 
 export const HomePage = () => {
   const trandingMovies = useFetchTrending();
+  localStorage.setItem('parent', '/');
 
   return (
     <>
