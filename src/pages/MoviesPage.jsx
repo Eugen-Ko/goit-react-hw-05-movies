@@ -1,48 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useFetchMovies } from 'hooks/Hooks';
 import {
   BoxSearch,
   ButtonSearch,
   FormSearch,
   InputSearch,
 } from './PageStyles.styles';
-import { fetchSearchMovies } from 'services/services';
 
 export const MoviesPage = () => {
-  const location = useLocation();
-
-  let query = new URLSearchParams(location.search).get('query');
-
-  const [searchQuery, setSearchQuery] = useState(query ? query : null);
-  const [searchList, setSearchList] = useState(null);
-  const [pending, setPending] = useState(true);
   let navigate = useNavigate();
-
-  useEffect(() => {
-    if (!searchQuery) {
-      location.search = null;
-      setSearchList(null);
-      return;
-    }
-
-    setPending(false);
-
-    fetchSearchMovies(searchQuery).then(data => {
-      setPending(true);
-      return data.total_results
-        ? setSearchList(data.results)
-        : setSearchList(0);
-    });
-  }, [location, searchQuery]);
+  const { pending, searchList, location } = useFetchMovies();
 
   const handleSubmit = e => {
     e.preventDefault();
-    query = e.target[0].value.toLowerCase().trim();
-    setSearchQuery(query);
-    navigate({
-      ...location,
-      search: `query=${query}`,
-    });
+    const query = e.target[0].value.toLowerCase().trim();
+    navigate(`/movies/?query=${query}`);
   };
 
   return (
@@ -64,7 +36,7 @@ export const MoviesPage = () => {
         <ul>
           {searchList.map(movie => (
             <li key={movie.id}>
-              <Link to={`${movie.id}`} state={`/movies/${location.search}`}>
+              <Link to={`${movie.id}`} state={`/movies/${location}`}>
                 {movie.title}
               </Link>
             </li>

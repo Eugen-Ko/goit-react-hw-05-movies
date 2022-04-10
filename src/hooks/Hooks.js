@@ -101,3 +101,37 @@ export const useParentPage = () => {
 
   return parentPage;
 };
+
+// --- for MoviePage --------------
+export const useFetchMovies = () => {
+  const location = useLocation();
+
+  let query = new URLSearchParams(location.search).get('query')
+    ? new URLSearchParams(location.search).get('query')
+    : null;
+
+  const [searchList, setSearchList] = useState(null);
+  const [pending, setPending] = useState(true);
+
+  useEffect(() => {
+    if (!query) {
+      location.search = null;
+      setSearchList(null);
+      return;
+    }
+
+    setPending(false);
+
+    moviesApi.fetchSearchMovies(query).then(data => {
+      setPending(true);
+      return data.total_results
+        ? setSearchList(data.results)
+        : setSearchList(0);
+    });
+  }, [location, query]);
+  return {
+    pending: pending,
+    searchList: searchList,
+    location: location.search,
+  };
+};
