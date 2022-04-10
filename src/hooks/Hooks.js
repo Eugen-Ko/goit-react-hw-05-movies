@@ -66,7 +66,9 @@ export const useFetchMovieCast = () => {
   const { moviesId } = useParams();
 
   useEffect(() => {
-    moviesApi.fetchMovieCast(moviesId).then(data => setCastList(data.cast));
+    moviesApi.fetchMovieCast(moviesId).then(data => {
+      return data.cast.length === 0 ? setCastList(0) : setCastList(data.cast);
+    });
   }, [moviesId]);
   return castList;
 };
@@ -78,12 +80,9 @@ export const useFetchMovieReviews = () => {
 
   useEffect(() => {
     moviesApi.fetchMovieReviews(moviesId).then(data => {
-      console.log(data);
       if (data.total_results === 0) {
-        console.log(data.total_results);
         return setReviewsDetails(404);
       } else {
-        console.log(data.result);
         return setReviewsDetails(data.results);
       }
     });

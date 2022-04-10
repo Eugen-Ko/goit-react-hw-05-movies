@@ -1,18 +1,23 @@
 import { useFetchMovieDetails } from 'hooks/Hooks';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   DetailesBox,
   ImageBox,
   InfoBox,
   Image,
   BoxCastReviews,
+  ButtonGoBack,
 } from './PageStyles.styles';
 
 export const MovieDetailsPage = () => {
   const movieDetails = useFetchMovieDetails();
+  const navigate = useNavigate();
 
   return (
     <>
+      <ButtonGoBack type="button" onClick={() => navigate(-1)}>
+        {`<- Go Back`}
+      </ButtonGoBack>
       {!movieDetails && <h1>Loading...</h1>}
       {movieDetails === 404 && <h1>Інформація відсутня. Бекенд лінивий!!!</h1>}
       {movieDetails !== 404 && movieDetails && (

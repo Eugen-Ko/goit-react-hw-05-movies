@@ -1,14 +1,16 @@
 import { useFetchMovieReviews } from 'hooks/Hooks';
+
 import { InfoBox } from './PageStyles.styles';
 
 export const MovieDetailsReviews = () => {
   const reviewsDetails = useFetchMovieReviews();
+
   return (
     <>
       {!reviewsDetails && <h1>Loading...</h1>}
       {reviewsDetails === 404 && (
         <InfoBox>
-          <h3>Без коментарів. Не цікаве.</h3>
+          <h3>Без коментарів. Не зацікавило.</h3>
         </InfoBox>
       )}
       {reviewsDetails && reviewsDetails !== 404 && (

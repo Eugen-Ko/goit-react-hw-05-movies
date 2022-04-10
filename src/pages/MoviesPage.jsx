@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   BoxSearch,
   ButtonSearch,
@@ -15,7 +15,6 @@ export const MoviesPage = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const params = useParams();
 
   useEffect(() => {
     if (!searchQuery) {
@@ -23,7 +22,6 @@ export const MoviesPage = () => {
     }
     setPending(false);
     fetchSearchMovies(searchQuery).then(data => {
-      console.log(data);
       setPending(true);
       return data.total_results
         ? setSearchList(data.results)
@@ -34,10 +32,6 @@ export const MoviesPage = () => {
   const handleSubmit = e => {
     e.preventDefault();
     setSearchQuery(e.target[0].value);
-
-    console.log('useParams: ', params);
-    console.log('useLocation: ', location);
-    console.log('useNavigation: ', navigate);
   };
 
   return (

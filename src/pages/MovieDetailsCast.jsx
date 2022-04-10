@@ -9,8 +9,9 @@ export const MovieDetailsCast = () => {
   const castList = useFetchMovieCast();
   return (
     <>
-      {!castList && <h1>Loading...</h1>}
-      {castList && (
+      {castList === null && <h1>Loading...</h1>}
+      {castList === 0 && <h3>Nothing fined....</h3>}
+      {castList !== 0 && castList && (
         <ul>
           {castList.map(({ id, original_name, profile_path, character }) => (
             <ActorBox key={id}>

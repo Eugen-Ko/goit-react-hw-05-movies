@@ -110,3 +110,11 @@ export const ButtonSearch = styled.button`
     color: #2196f3;
   }
 `;
+
+export const ButtonGoBack = styled.button`
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid #000000;
+  padding: 0 15px;
+  margin-left: 15px;
+`;
