@@ -11,15 +11,20 @@ import {
 
 export const MovieDetailsPage = () => {
   const movieDetails = useFetchMovieDetails();
-  const parentPage = useParentPage();
+  // const parentPage = useParentPage();
+  const hookParentPage = useParentPage();
+  const parentPage = hookParentPage ? hookParentPage : '/';
+
   let navigate = useNavigate();
 
   return (
     <>
+      {/* {!parentPage && ( */}
       <ButtonGoBack
         type="button"
         onClick={() => navigate(parentPage)}
       >{`<- Go Back`}</ButtonGoBack>
+      {/* )} */}
       {!movieDetails && <h1>Loading...</h1>}
       {movieDetails === 404 && <h1>Інформація відсутня. Бекенд лінивий!!!</h1>}
       {movieDetails !== 404 && movieDetails && (
