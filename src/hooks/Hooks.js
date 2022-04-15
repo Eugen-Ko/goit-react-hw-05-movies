@@ -57,6 +57,7 @@ export const useFetchMovieDetails = () => {
 
     moviesApi.fetchMovieDetails(moviesId).then(normalize).then(setMovieDetails);
   }, [moviesId]);
+  console.log(movieDetails);
   return movieDetails;
 };
 
@@ -96,7 +97,8 @@ export const useParentPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    return setParentPage(location.state);
+    console.log(location.state.from);
+    return setParentPage(location.state.from);
   }, [location.state]);
 
   return parentPage;

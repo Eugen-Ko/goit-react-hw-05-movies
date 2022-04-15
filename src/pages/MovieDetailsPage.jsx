@@ -1,5 +1,5 @@
 import { useFetchMovieDetails, useParentPage } from 'hooks/Hooks';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   DetailesBox,
   ImageBox,
@@ -12,8 +12,13 @@ import {
 export const MovieDetailsPage = () => {
   const movieDetails = useFetchMovieDetails();
   // const parentPage = useParentPage();
-  const hookParentPage = useParentPage();
-  const parentPage = hookParentPage ? hookParentPage : '/';
+  // const hookParentPage = useParentPage();
+  const location = useLocation();
+  console.log(location);
+  // const parentPage = hookParentPage ? hookParentPage : '/';
+
+  const cameFrom = location?.state?.from ?? '/';
+  //  <Links to={`/movies/${moviesId}/cast`} state={{ from: cameFrom }}>
 
   let navigate = useNavigate();
 
@@ -22,7 +27,7 @@ export const MovieDetailsPage = () => {
       {/* {!parentPage && ( */}
       <ButtonGoBack
         type="button"
-        onClick={() => navigate(parentPage)}
+        onClick={() => navigate(location?.state?.from)}
       >{`<- Go Back`}</ButtonGoBack>
       {/* )} */}
       {!movieDetails && <h1>Loading...</h1>}
@@ -48,12 +53,18 @@ export const MovieDetailsPage = () => {
             <p>Additional information</p>
             <ul>
               <li>
-                <NavLink to={`cast`} state={parentPage}>
+                <NavLink
+                  to={`/movies/${movieDetails.id}/cast`}
+                  state={{ from: cameFrom }}
+                >
                   Cast
                 </NavLink>
               </li>
               <li>
-                <NavLink to={`reviews`} state={parentPage}>
+                <NavLink
+                  to={`/movies/${movieDetails.id}/review`}
+                  state={{ from: cameFrom }}
+                >
                   Review
                 </NavLink>
               </li>

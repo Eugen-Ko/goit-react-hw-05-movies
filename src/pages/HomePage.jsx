@@ -14,7 +14,7 @@ export const HomePage = () => {
         <ul>
           {trandingMovies.map(movie => (
             <li key={movie.id}>
-              <Link to={`movies/${movie.id}`} state={'/'}>
+              <Link to={`movies/${movie.id}`} state={{from: '/'}}>
                 {movie.title}
               </Link>
             </li>
